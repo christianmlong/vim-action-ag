@@ -1,16 +1,16 @@
-" vim-ag-anying.vim ag anything
+" vim-ack-anying.vim ack anything
 " Maintainer:   Chun Yang <http://github.com/Chun-Yang>
 " Version:      1.0
 
-if exists("g:loaded_vim_action_ag") || &cp || v:version < 700
+if exists("g:loaded_vim_action_ack") || &cp || v:version < 700
   finish
 endif
-let g:loaded_vim_action_ag = 1
+let g:loaded_vim_action_ack = 1
 
 " http://stackoverflow.com/questions/399078/what-special-characters-must-be-escaped-in-regular-expressions
-let g:vim_action_ag_escape_chars = get(g:, 'vim_action_ag_escape_chars', '#%.^$*+?()[{\\|')
+let g:vim_action_ack_escape_chars = get(g:, 'vim_action_ack_escape_chars', '#%.^$*+?()[{\\|')
 
-function! s:Ag(mode) abort
+function! s:Ack(mode) abort
   " preserver @@ register
   let reg_save = @@
 
@@ -29,13 +29,13 @@ function! s:Ag(mode) abort
 
   " escape special chars,
   " % is file name in vim we need to escape that first
-  " # is secial in ag
-  let escaped_for_ag = escape(@@, '%#')
-  let escaped_for_ag = escape(escaped_for_ag, g:vim_action_ag_escape_chars)
+  " # is secial in ack
+  let escaped_for_ack = escape(@@, '%#')
+  let escaped_for_ack = escape(escaped_for_ack, g:vim_action_ack_escape_chars)
 
-  " execute Ag command
+  " execute Ack command
   " '!' is used to NOT jump to the first match
-  exe ":Ag!" "'".escaped_for_ag."'"
+  exe ":Ack!" "'".escaped_for_ack."'"
 
   " go to the first search match
   normal! n
@@ -45,9 +45,9 @@ function! s:Ag(mode) abort
 endfunction
 
 " NOTE: set hlsearch does not work in a function
-vnoremap <silent> <Plug>AgActionVisual :<C-U>call <SID>Ag(visualmode())<CR>
-nnoremap <silent> <Plug>AgAction       :set hlsearch<CR>:<C-U>set opfunc=<SID>Ag<CR>g@
-nnoremap <silent> <Plug>AgActionWord   :set hlsearch<CR>:<C-U>set opfunc=<SID>Ag<CR>g@iw
+vnoremap <silent> <Plug>AckActionVisual :<C-U>call <SID>Ack(visualmode())<CR>
+nnoremap <silent> <Plug>AckAction       :set hlsearch<CR>:<C-U>set opfunc=<SID>Ack<CR>g@
+nnoremap <silent> <Plug>AckActionWord   :set hlsearch<CR>:<C-U>set opfunc=<SID>Ack<CR>g@iw
 
-vmap gag <Plug>AgActionVisual
-nmap gag <Plug>AgAction
+vmap gag <Plug>AckActionVisual
+nmap gag <Plug>AckAction
